@@ -1,2 +1,2 @@
 # save-my-notes-app
-Vue.js, Express (SQL Lite)
+Vue.js, Express
