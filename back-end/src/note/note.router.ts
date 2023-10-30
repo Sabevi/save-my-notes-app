@@ -38,5 +38,14 @@ export class NoteRouter {
                 next(error);
             }
         });
+
+        this.router.put('/update-note', (req, res, next) => {
+            try {
+                const result = this.noteController.update(req.body.id, req.body.note);
+                res.status(201).json(result);
+            } catch (error: unknown) {
+                next(error);
+            }
+        });
     }
 }

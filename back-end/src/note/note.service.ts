@@ -1,7 +1,7 @@
 import { Note } from './note';
-
 export interface NoteService {
-    add(note:string): Note;
-    getById(id: number): Note | null;
     getAll(): Note[];
+    getById(id: number): Note | null;
+    add(note: string): Note;
+    update(id: number, note: string): Note | null;
 }

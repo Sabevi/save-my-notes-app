@@ -24,4 +24,17 @@ export class NoteController {
         }
         return this.noteService.add(note);
     }
+
+    update(id: number, note: string): Note | null {
+        if (!Number.isInteger(id)) {
+            throw new Error('Id should be an integer');
+        }
+        if (id < 0) {
+            throw new Error('Id should be positive');
+        }
+        if (!note){
+            throw new Error('The note is empty');
+        }
+        return this.noteService.update(id, note);
+    };
 }
