@@ -13,6 +13,16 @@ export class UserJSONService implements NoteService {
         return JSON.parse(data) as Note [];
     }
 
+    getAll(): Note[] {
+        return this.readJSONFile();
+    }
+
+    getById(id: number): Note | null {
+        const notes: Note[] = this.readJSONFile();
+        const note = notes.find(note => note.id === id);
+        return note || null;
+    }
+
     add(note: string): Note{
         const notes: Note[] = this.readJSONFile();
         const newNote = {
@@ -22,11 +32,5 @@ export class UserJSONService implements NoteService {
         notes.push(newNote);
         fs.writeFileSync(this.filePath, JSON.stringify(notes));
         return newNote;
-    }
-
-    getById(id: number): Note | null {
-        const notes: Note[] = this.readJSONFile();
-        const note = notes.find(note => note.id === id);
-        return note || null;
     }
 }
