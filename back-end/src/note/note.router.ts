@@ -47,5 +47,14 @@ export class NoteRouter {
                 next(error);
             }
         });
+
+        this.router.delete('/delete-note/:id', (req, res, next) => {
+            try {
+                const result = this.noteController.delete(parseInt(req.params.id));
+                res.status(200).json(result);
+            } catch (error: unknown) {
+                next(error);
+            }
+        })
     }
 }

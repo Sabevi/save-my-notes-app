@@ -46,4 +46,12 @@ export class UserJSONService implements NoteService {
         fs.writeFileSync(this.filePath, JSON.stringify(notes));
         return noteToUpdate || null;
     }
+
+    delete(id: number): Note[]| null {
+        const notes: Note[] = this.readJSONFile();
+        const noteToDelete = notes.find(note => note.id === id);
+        noteToDelete && notes.splice(notes.indexOf(noteToDelete), 1);
+        fs.writeFileSync(this.filePath, JSON.stringify(notes));
+        return notes || null;
+    };
 }
