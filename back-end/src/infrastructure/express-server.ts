@@ -26,4 +26,8 @@ export class ExpressServer {
   private configureRoutes(): void {
     this.express.use('/api', this.expressRouter.router);
   }
+
+  use(middleware: express.RequestHandler) {
+    return this.express.use(middleware);
+  }
 }

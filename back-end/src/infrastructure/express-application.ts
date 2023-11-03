@@ -3,57 +3,67 @@ import { ExpressServer } from './express-server';
 import { UserJSONService } from '../note/note.json-service';
 import { NoteService } from '../note/note.service';
 import * as dotenv from 'dotenv';
+import cors from 'cors';
 
 export class ExpressApplication {
-    private expressRouter!: ExpressRouter;
-    private port!: string;
-    private server!: ExpressServer;
-    private noteService!: NoteService;
+  private expressRouter!: ExpressRouter;
+  private port!: string;
+  private server!: ExpressServer;
+  private noteService!: NoteService;
 
-    constructor() {
-        this.configureApplication();
+  constructor() {
+    this.configureApplication();
+  }
+
+  bootstrap(): void {
+    this.server.bootstrap();
+  }
+
+  private configureApplication(): void {
+    this.configureEnvironment();
+    this.configureServerPort();
+    this.configureServices();
+    this.configureExpressRouter();
+    this.configureServer();
+    this.configureCors();
+  }
+
+  private configureEnvironment(): void {
+    dotenv.config({
+      path: '.env',
+    });
+  }
+
+  private configureServerPort(): void {
+    this.port = this.getPort();
+  }
+
+  private configureServices(): void {
+    this.noteService = new UserJSONService();
+  }
+
+  private configureExpressRouter(): void {
+    this.expressRouter = new ExpressRouter(this.noteService);
+  }
+
+  private configureServer(): void {
+    this.server = new ExpressServer(this.expressRouter, this.port);
+  }
+
+  private getPort(): string {
+    const port = process.env.PORT;
+    if (!port) {
+      throw new Error('No port was found in env file.');
     }
 
-    bootstrap(): void {
-        this.server.bootstrap();
-    }
+    return port;
+  }
 
-    private configureApplication(): void {
-        this.configureEnvironment();
-        this.configureServerPort();
-        this.configureServices();
-        this.configureExpressRouter();
-        this.configureServer();
-    }
-
-    private configureEnvironment(): void {
-        dotenv.config({
-            path: '.env',
-        });
-    }
-
-    private configureServerPort(): void {
-        this.port = this.getPort();
-    }
-
-    private configureServices(): void {
-        this.noteService = new UserJSONService();
-    }
-
-    private configureExpressRouter(): void {
-        this.expressRouter = new ExpressRouter(this.noteService);
-    }
-
-    private configureServer(): void {
-        this.server = new ExpressServer(this.expressRouter, this.port);
-    }
-
-    private getPort(): string {
-        const port = process.env.PORT;
-        if (!port) {
-            throw new Error('No port was found in env file.');
-        }
-
-        return port;
-    }
+  private configureCors(): void {
+    const corsOptions = {
+      origin: process.env.FRONTEND_URL || '',
+      credentials: true,
+    };
+    this.server.use(cors(corsOptions));
+  }
 }
