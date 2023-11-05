@@ -12,7 +12,7 @@ export default ({ mode }) => {
       },
     },
     server: {
-      port: +process.env.VITE_VUE_APP,
+      port: process.env.VITE_VUE_APP ? +process.env.VITE_VUE_APP : 3000,
     },
   });
 };

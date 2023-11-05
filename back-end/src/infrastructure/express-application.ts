@@ -3,7 +3,6 @@ import { ExpressServer } from './express-server';
 import { UserJSONService } from '../note/note.json-service';
 import { NoteService } from '../note/note.service';
 import * as dotenv from 'dotenv';
-import cors from 'cors';
 
 export class ExpressApplication {
   private expressRouter!: ExpressRouter;
@@ -25,7 +24,6 @@ export class ExpressApplication {
     this.configureServices();
     this.configureExpressRouter();
     this.configureServer();
-    this.configureCors();
   }
 
   private configureEnvironment(): void {
@@ -57,13 +55,5 @@ export class ExpressApplication {
     }
 
     return port;
-  }
-
-  private configureCors(): void {
-    const corsOptions = {
-      origin: process.env.FRONTEND_URL || '',
-      credentials: true,
-    };
-    this.server.use(cors(corsOptions));
   }
 }

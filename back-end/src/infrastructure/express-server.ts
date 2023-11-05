@@ -1,6 +1,7 @@
 import express from 'express';
 import { ExpressRouter } from './express-router';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 export class ExpressServer {
   private express = express();
@@ -15,6 +16,7 @@ export class ExpressServer {
 
   private configureBodyParser(): void {
     this.express.use(bodyParser.json());
+    this.express.use(cors());
   }
 
   bootstrap(): void {
@@ -25,9 +27,5 @@ export class ExpressServer {
   
   private configureRoutes(): void {
     this.express.use('/api', this.expressRouter.router);
-  }
-
-  use(middleware: express.RequestHandler) {
-    return this.express.use(middleware);
   }
 }

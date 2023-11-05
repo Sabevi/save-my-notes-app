@@ -3,7 +3,7 @@ import { NoteService } from './note.service';
 import fs from 'fs';
 
 export class UserJSONService implements NoteService {
-    private filePath: string = './src/database/users.json';
+    private filePath: string = './src/database/notes.json';
 
     private readJSONFile(): Note [] {
         const data = fs.readFileSync(this.filePath, 'utf8');
