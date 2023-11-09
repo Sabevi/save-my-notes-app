@@ -1,34 +1,33 @@
 <template>
-  <textarea v-model="note.content"></textarea>
-  <br />
-  <button @click="submit">Create new note</button>
+  <div>
+    <input v-model="newNote" type="text" />
+    <button @click="addNote">Add Note</button>
+  </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import axios from "redaxios";
-import { ref, type Ref } from 'vue';
 
-// see where to put types
-type Note = {
-  content: string;
-};
-
-const note: Ref<Note>  = ref({
-  content: '',
-});
-
-async function submit() {
-  try {
-    const response = await axios.post("http://localhost:3000/api/note/add-note", {
-      note: note.value.content,
-    });
-    console.log("Response:", response.data);
-  } catch (error) {
-    console.error("Error:", error);
-  }
-
-  note.value.content = '';
+export default {
+  data() {
+    return {
+      newNote: '',
+    };
+  },
+  methods: {
+    addNote() {
+      axios
+        .post("http://localhost:3000/api/note/add-note", {
+          note: this.newNote,
+        })
+        .then(() => {
+          this.newNote = '';
+          this.$emit('noteAdded');
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+  },
 };
 </script>
-
-<style></style>

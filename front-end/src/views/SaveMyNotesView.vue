@@ -7,7 +7,6 @@ import NotesList from "@/components/NotesList.vue";
   <main>
     <h1>Save my Notes</h1>
     <br />
-    <AddNote />
     <NotesList />
   </main>
 </template>
