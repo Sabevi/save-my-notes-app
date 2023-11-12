@@ -37,7 +37,7 @@ export default {
     if (this.note) {
       // Update existing note
       axios
-        .put("http://localhost:3000/api/note/update-note", {
+        .put(`${import.meta.env.VITE_VUE_APP_API_URL}/update-note`, {
           id: this.note.id,
           note: this.newNote,
         })
@@ -51,7 +51,7 @@ export default {
     } else {
       // Add new note
       axios
-        .post("http://localhost:3000/api/note/add-note", {
+        .post(`${import.meta.env.VITE_VUE_APP_API_URL}/add-note`, {
           note: this.newNote,
         })
         .then(() => {

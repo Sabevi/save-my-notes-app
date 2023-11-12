@@ -45,7 +45,7 @@ export default {
   methods: {
     fetchNotes() {
       axios
-        .get("http://localhost:3000/api/note")
+      .get(`${import.meta.env.VITE_VUE_APP_API_URL}`)
         .then((response) => {
           this.notes = response.data;
         })
