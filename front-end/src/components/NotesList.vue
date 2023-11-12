@@ -3,30 +3,35 @@
     <h1>Notes</h1>
     <AddNote @noteAdded="fetchNotes" />
     <ul>
-      <li v-for="note in notes" :key="note.id">{{ note.note }}</li>
+      <li v-for="note in notes" :key="note.id">
+        {{ note.note }}
+        <DeleteNote :id="note.id" @noteRemoved="fetchNotes" />
+      </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
 import axios from "redaxios";
-import { ref, type Ref } from 'vue';
-import AddNote from './AddNote.vue'; // Import the AddNote component
+import { ref, type Ref } from "vue";
+import AddNote from "./AddNote.vue";
+import DeleteNote from "./DeleteNote.vue";
 
 // see where to put types
 type Note = {
-  id: string;
+  id: number;
   note: string;
 };
 
 const note: Ref<Note> = ref({
-  id: '',
-  note: '',
+  id: 0,
+  note: "",
 });
 
 export default {
   components: {
-    AddNote, // Register the AddNote component
+    AddNote,
+    DeleteNote,
   },
   data() {
     return {

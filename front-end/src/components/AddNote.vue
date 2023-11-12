@@ -11,7 +11,7 @@ import axios from "redaxios";
 export default {
   data() {
     return {
-      newNote: '',
+      newNote: "",
     };
   },
   methods: {
@@ -21,8 +21,8 @@ export default {
           note: this.newNote,
         })
         .then(() => {
-          this.newNote = '';
-          this.$emit('noteAdded');
+          this.newNote = "";
+          this.$emit("noteAdded");
         })
         .catch((error) => {
           console.error("Error:", error);
