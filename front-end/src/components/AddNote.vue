@@ -1,6 +1,7 @@
 <template>
   <div>
-    <textarea v-model="newNote" type="text" />
+    <label for="noteInput" class="sr-only">Note to Update </label>
+    <textarea id="noteInput" v-model="newNote" type="text" />
     <button @click="addNote">{{ buttonText }}</button>
   </div>
 </template>
@@ -72,3 +73,17 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+</style>
