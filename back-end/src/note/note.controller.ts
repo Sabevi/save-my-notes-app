@@ -4,28 +4,28 @@ import { NoteService } from './note.service';
 export class NoteController {
     constructor(private noteService: NoteService) {}
 
-    getAll(): Note[] {
-        return this.noteService.getAll();
+    async getAll(): Promise<Note[]> {
+        return await this.noteService.getAll();
     }
 
-    getById(id: number): Note | null {
+    async getById(id: number): Promise<Note | null> {
         if (!Number.isInteger(id)) {
             throw new Error('Id should be an integer');
         }
         if (id < 0) {
             throw new Error('Id should be positive');
         }
-        return this.noteService.getById(id);
+        return await this.noteService.getById(id);
     }
 
-    add(note: string): Note {
+    async add(note: string): Promise<Note> {
         if (!note){
             throw new Error('The note is empty');
         }
-        return this.noteService.add(note);
+        return await this.noteService.add(note);
     }
 
-    update(id: number, note: string): Note | null {
+    async update(id: number, note: string): Promise<Note | null> {
         if (!Number.isInteger(id)) {
             throw new Error('Id should be an integer');
         }
@@ -35,16 +35,16 @@ export class NoteController {
         if (!note){
             throw new Error('The note is empty');
         }
-        return this.noteService.update(id, note);
+        return await this.noteService.update(id, note);
     };
 
-    delete(id: number): Note[] | null {
+    async delete(id: number): Promise<Note[] | null> {
         if (!Number.isInteger(id)) {
             throw new Error('Id should be an integer');
         }
         if (id < 0) {
             throw new Error('Id should be positive');
         }
-        return this.noteService.delete(id);
+        return await this.noteService.delete(id);
     };
 }

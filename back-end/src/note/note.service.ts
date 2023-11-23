@@ -1,8 +1,8 @@
 import { Note } from './note';
 export interface NoteService {
-    getAll(): Note[];
-    getById(id: number): Note | null;
-    add(note: string): Note;
-    update(id: number, note: string): Note | null;
-    delete(id: number): Note[] | null;
+    getAll(): Promise<Note[]>;
+    getById(id: number): Promise<Note | null>;
+    add(note: string): Promise<Note>;
+    update(id: number, note: string): Promise<Note | null>;
+    delete(id: number): Promise<Note[] | null>;
 }
