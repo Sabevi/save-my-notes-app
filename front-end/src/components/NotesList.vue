@@ -11,11 +11,7 @@
 <script lang="ts">
 import DeleteNote from "./DeleteNote.vue";
 import UpdateNote from "./UpdateNote.vue";
-
-interface Note {
-  id: number;
-  note: string;
-}
+import type { Note } from "../types";
 
 export default {
   props: {

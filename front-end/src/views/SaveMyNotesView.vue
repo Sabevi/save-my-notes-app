@@ -11,17 +11,12 @@ import axios from "redaxios";
 import { ref, type Ref } from "vue";
 import AddNote from "../components/AddNote.vue";
 import NotesList from "../components/NotesList.vue";
+import type { Note } from "../types";
 
-// see where to put types
-type Note = {
-  id: number;
-  note: string;
-};
-
-const note: Ref<Note> = ref({
+const note: Note = {
   id: 0,
   note: "",
-});
+};
 
 export default {
   components: {

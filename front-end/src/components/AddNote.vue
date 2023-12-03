@@ -8,11 +8,7 @@
 
 <script lang="ts">
 import axios from "redaxios";
-
-type Note = {
-  id: number;
-  note: string;
-};
+import type { Note } from "../types";
 
 export default {
   props: {
