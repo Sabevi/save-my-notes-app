@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="delete" @click="deleteNote">
+    <button class="delete" @click="deleteNote" aria-label="delete note">
       <font-awesome-icon :icon="['fas', 'trash']" />
     </button>
   </div>

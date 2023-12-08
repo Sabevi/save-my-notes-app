@@ -2,7 +2,7 @@
   <div>
     <label for="noteInput" class="sr-only">Note to Add or Update </label>
     <textarea id="noteInput" v-model="newNote" type="text" maxlength="650" />
-    <button class="addOrUpdate" @click="addNote">
+    <button class="addOrUpdate" @click="addNote" :aria-label="buttonText">
       {{ buttonText }}<font-awesome-icon :icon="['fas', 'check']" />
     </button>
   </div>

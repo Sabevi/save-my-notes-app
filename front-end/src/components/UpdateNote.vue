@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="update" @click="triggerUpdate">
+    <button class="update" @click="triggerUpdate" aria-label="update note">
       <font-awesome-icon :icon="['fass', 'pen-to-square']" />
     </button>
   </div>
