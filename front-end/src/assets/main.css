@@ -6,3 +6,9 @@
   font-weight: normal;
   border: 2px solid red;
 }
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}

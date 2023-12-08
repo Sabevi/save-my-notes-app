@@ -1,21 +1,40 @@
 <template>
-    <div>
-      <button @click="triggerUpdate">Update</button>
-    </div>
-  </template>
-  
-  <script lang="ts">
-  export default {
-    props: {
+  <div>
+    <button class="update" @click="triggerUpdate">
+      <font-awesome-icon :icon="['fass', 'pen-to-square']" />
+    </button>
+  </div>
+</template>
+
+<script lang="ts">
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+library.add(faPenToSquare);
+
+export default {
+  components: {
+    "font-awesome-icon": FontAwesomeIcon,
+  },
+  props: {
     id: {
       type: Number,
       required: true,
     },
   },
-    methods: {
-      triggerUpdate() {
-        this.$emit('update-note', this.id);
-      },
+  methods: {
+    triggerUpdate() {
+      this.$emit("update-note", this.id);
     },
-  };
-  </script>
+  },
+};
+</script>
+
+<style scoped>
+.update {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+}
+</style>

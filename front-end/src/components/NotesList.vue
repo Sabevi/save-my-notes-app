@@ -68,9 +68,10 @@ export default {
 	min-height: 200px;
   min-width: 280px;
 	box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-	padding: 10px 20px;
+	padding: 40px 20px 20px 20px;
 	font-family: 'Indie Flower', cursive;
 	font-size: 14px;
+  position: relative;
 
   @media(max-width: 1000px) {
     min-height: 150px;

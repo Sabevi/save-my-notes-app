@@ -1,13 +1,23 @@
 <template>
   <div>
-    <button @click="deleteNote">X</button>
+    <button class="delete" @click="deleteNote">
+      <font-awesome-icon :icon="['fas', 'trash']" />
+    </button>
   </div>
 </template>
 
 <script lang="ts">
 import axios from "redaxios";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+library.add(faTrash);
 
 export default {
+  components: {
+    "font-awesome-icon": FontAwesomeIcon,
+  },
   props: {
     id: {
       type: Number,
@@ -17,9 +27,11 @@ export default {
   methods: {
     deleteNote() {
       axios
-        .delete(`${import.meta.env.VITE_VUE_APP_API_URL}/delete-note/${this.id}`)
+        .delete(
+          `${import.meta.env.VITE_VUE_APP_API_URL}/delete-note/${this.id}`
+        )
         .then(() => {
-          this.$emit('noteRemoved');
+          this.$emit("noteRemoved");
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -40,5 +52,10 @@ export default {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+.delete {
+  position: absolute;
+  top: 10px;
+  right: 5px;
 }
 </style>
