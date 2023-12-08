@@ -1,9 +1,15 @@
 <template>
-  <div>
-    <h1>Notes</h1>
-    <AddNote :note="selectedNote" @noteAdded="fetchNotes" @noteUpdated="fetchNotes" />
-    <NotesList :notes="notes" @update-note="triggerUpdate" @noteRemoved="fetchNotes" />
-  </div>
+  <h1>Notes</h1>
+  <AddNote
+    :note="selectedNote"
+    @noteAdded="fetchNotes"
+    @noteUpdated="fetchNotes"
+  />
+  <NotesList
+    :notes="notes"
+    @update-note="triggerUpdate"
+    @noteRemoved="fetchNotes"
+  />
 </template>
 
 <script lang="ts">
@@ -32,7 +38,7 @@ export default {
   methods: {
     fetchNotes() {
       axios
-      .get(`${import.meta.env.VITE_VUE_APP_API_URL}`)
+        .get(`${import.meta.env.VITE_VUE_APP_API_URL}`)
         .then((response) => {
           this.notes = response.data;
         })
@@ -41,7 +47,7 @@ export default {
         });
     },
     triggerUpdate(id: number) {
-      this.selectedNote = this.notes.find(note => note.id === id) || null;
+      this.selectedNote = this.notes.find((note) => note.id === id) || null;
     },
   },
   mounted() {
@@ -49,3 +55,4 @@ export default {
   },
 };
 </script>
+```
