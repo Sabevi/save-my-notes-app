@@ -54,7 +54,6 @@ export default {
 
     @media(max-width: 620px) {
         grid-template-columns: repeat(1, 1fr);
-        padding: 80px;
     }
 
     @media(max-width: 420px) {
@@ -77,6 +76,7 @@ export default {
   @media(max-width: 1000px) {
     min-height: 150px;
     min-width: 250px;
+    font-size: 12px;
     }
 }
 </style>

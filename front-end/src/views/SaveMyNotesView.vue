@@ -1,5 +1,5 @@
 <template>
-  <h1 class="gradient-text"> Save My Notes </h1>
+  <h1> Save My Notes </h1>
   <AddNote
     :note="selectedNote"
     @noteAdded="fetchNotes"
@@ -63,6 +63,12 @@ h1 {
   color: #fff;
   text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  padding-top: 30px;
+
+  @media(max-width: 750px) {
+    font-size: 30px;
+    padding-top: 20px;
+  }
 }
 </style>
 ```

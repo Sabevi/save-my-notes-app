@@ -112,15 +112,19 @@ textarea {
   font-size: 14px;
   padding: 20px;
 
-  @media(max-width: 700px) {
-    max-width: 450px;
+  @media(max-width: 750px) {
+    max-width: 550px;
   }
 
-  @media(max-width: 550px) {
+  @media(max-width: 650px) {
     max-width: 400px;
   }
 
   @media(max-width: 450px) {
+    max-width: 350px;
+  }
+
+  @media(max-width: 400px) {
     max-width: 280px;
   }
 }
@@ -137,6 +141,10 @@ textarea:focus {
   font-weight: bold;
   font-size: 20px;
   margin: 20px auto 0;
+
+  @media(max-width: 750px) {
+    font-size: 15px;
+  }
 }
 .addOrUpdate .svg-inline--fa {
   margin-left: 10px;
