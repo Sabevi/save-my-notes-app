@@ -37,4 +37,7 @@ export default {
   top: 10px;
   right: 25px;
 }
+.update .svg-inline--fa {
+  color: rgb(55, 141, 167);
+}
 </style>

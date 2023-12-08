@@ -5,6 +5,3 @@ import SaveMyNotes from './views/SaveMyNotesView.vue';
 <template>
   <SaveMyNotes />
 </template>
-
-<style scoped>
-</style>

@@ -1,5 +1,5 @@
 <template>
-  <h1>Notes</h1>
+  <h1 class="gradient-text"> Save My Notes </h1>
   <AddNote
     :note="selectedNote"
     @noteAdded="fetchNotes"
@@ -55,4 +55,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+h1 {
+  font-size: 50px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+</style>
 ```

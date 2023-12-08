@@ -30,12 +30,13 @@ export default {
 
 <style scoped>
 .cards {
+    max-width: 1440px;
+    margin: auto;
     display: grid;
     grid-column: 2/12;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 30px;
     padding-top: 40px;
-    border: 2px solid blue;
     
     @media(max-width: 1500px) {
         grid-template-columns: repeat(3, 1fr);
@@ -69,7 +70,7 @@ export default {
   min-width: 280px;
 	box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
 	padding: 40px 20px 20px 20px;
-	font-family: 'Indie Flower', cursive;
+  font-style: italic;
 	font-size: 14px;
   position: relative;
 
