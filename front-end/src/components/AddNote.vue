@@ -1,7 +1,14 @@
 <template>
   <div>
     <label for="noteInput" class="sr-only">Note to Add or Update </label>
-    <textarea id="noteInput" v-model="newNote" type="text" maxlength="650" />
+    <textarea
+      id="noteInput"
+      v-model="newNote"
+      @input="processInput"
+      type="text"
+      maxlength="650"
+      @keydown="preventExcessLines"
+    />
     <button class="addOrUpdate" @click="addNote" :aria-label="buttonText">
       {{ buttonText }}<font-awesome-icon :icon="['fas', 'check']" />
     </button>
@@ -17,6 +24,8 @@ import type { Note } from "../types";
 
 library.add(faCheck);
 
+const MAX_LINES = 24;
+
 export default {
   components: {
     "font-awesome-icon": FontAwesomeIcon,
@@ -31,6 +40,7 @@ export default {
     return {
       newNote: "",
       noteUpdated: null as Note | null,
+      noteLines: [] as string[],
     };
   },
   watch: {
@@ -40,8 +50,10 @@ export default {
         this.noteUpdated = newValue;
         if (newValue) {
           this.newNote = newValue.note;
+          this.processInput();
         } else {
           this.newNote = "";
+          this.noteLines = [];
         }
       },
     },
@@ -52,17 +64,37 @@ export default {
     },
   },
   methods: {
+    preventExcessLines(event: KeyboardEvent) {
+    const lines = this.newNote.split("\n");
+    if (lines.length >= MAX_LINES && event.key === 'Enter') {
+      event.preventDefault();
+    }
+  },
+    processInput() {
+      const lines = this.newNote.split("\n");
+      const processedLines = lines.map((line) => {
+        if (line.trim() === "") {
+          return "";
+        } else if (line.trim().startsWith("-")) {
+          return `• ${line.substring(1)}`;
+        } else {
+          return `${line}`;
+        }
+      });
+      this.noteLines = processedLines;
+    },
     addNote() {
       if (this.noteUpdated) {
         // Update existing note
         axios
           .put(`${import.meta.env.VITE_VUE_APP_API_URL}/update-note`, {
             id: this.noteUpdated.id,
-            note: this.newNote,
+            note: this.noteLines,
           })
           .then(() => {
             this.newNote = "";
             this.noteUpdated = null;
+            this.noteLines = [];
             this.$emit("noteUpdated");
           })
           .catch((error) => {
@@ -70,12 +102,14 @@ export default {
           });
       } else {
         // Add new note
+        console.log(this.noteLines);
         axios
           .post(`${import.meta.env.VITE_VUE_APP_API_URL}/add-note`, {
-            note: this.newNote,
+            note: this.noteLines,
           })
           .then(() => {
             this.newNote = "";
+            this.noteLines = [];
             this.$emit("noteAdded");
           })
           .catch((error) => {
@@ -112,19 +146,19 @@ textarea {
   font-size: 14px;
   padding: 20px;
 
-  @media(max-width: 750px) {
+  @media (max-width: 750px) {
     max-width: 550px;
   }
 
-  @media(max-width: 650px) {
+  @media (max-width: 650px) {
     max-width: 400px;
   }
 
-  @media(max-width: 450px) {
+  @media (max-width: 450px) {
     max-width: 350px;
   }
 
-  @media(max-width: 400px) {
+  @media (max-width: 400px) {
     max-width: 280px;
   }
 }
@@ -142,7 +176,7 @@ textarea:focus {
   font-size: 20px;
   margin: 20px auto 0;
 
-  @media(max-width: 750px) {
+  @media (max-width: 750px) {
     font-size: 15px;
   }
 }
