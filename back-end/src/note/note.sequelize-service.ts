@@ -1,7 +1,7 @@
 import { Note } from './note';
 import { NoteService } from './note.service';
 
-export class UserJSONService implements NoteService {
+export class UserSequelizeService implements NoteService {
   async getAll(): Promise<Note[]> {
     return Note.findAll();
   }
