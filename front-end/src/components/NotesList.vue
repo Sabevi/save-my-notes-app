@@ -15,12 +15,13 @@
 <script lang="ts">
 import DeleteNote from "./DeleteNote.vue";
 import UpdateNote from "./UpdateNote.vue";
+import type { PropType } from 'vue';
 import type { Note } from "../types";
 
 export default {
   props: {
     notes: {
-      type: Array as () => Note[],
+      type: Array as PropType< Note[] >,
       required: true,
     },
   },

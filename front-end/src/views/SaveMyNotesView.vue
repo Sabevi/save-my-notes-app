@@ -14,7 +14,6 @@
 
 <script lang="ts">
 import axios from "redaxios";
-import { ref, type Ref } from "vue";
 import AddNote from "../components/AddNote.vue";
 import NotesList from "../components/NotesList.vue";
 import type { Note } from "../types";

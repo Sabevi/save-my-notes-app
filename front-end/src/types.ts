@@ -1,4 +1,4 @@
 export type Note = {
     id: number;
-    note: string[];
+    note: string;
 };
