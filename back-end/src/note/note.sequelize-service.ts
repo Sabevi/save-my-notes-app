@@ -16,11 +16,11 @@ export class UserSequelizeService implements NoteService {
 
   async update(id: number, note: string[]): Promise<Note | null> {
     const noteToUpdate = await Note.findByPk(id);
-  if (noteToUpdate) {
-    noteToUpdate.set('note', JSON.stringify(note));
-    await noteToUpdate.save();
-  }
-  return noteToUpdate;
+    if (noteToUpdate) {
+      noteToUpdate.set('note', JSON.stringify(note));
+      await noteToUpdate.save();
+    }
+    return noteToUpdate;
   }
 
   async delete(id: number): Promise<Note[] | null> {

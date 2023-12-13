@@ -3,7 +3,7 @@ import { sequelize }from '../database/database';
 
 export class Note extends Model {
   public id!: number;
-  public note!: string[];
+  public note!: string;
 }
 
 Note.init({
