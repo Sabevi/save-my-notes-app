@@ -24,7 +24,7 @@ import type { Note } from "../types";
 
 library.add(faCheck);
 
-const MAX_LINES = 24;
+const MAX_LINES = 20;
 
 export default {
   components: {
