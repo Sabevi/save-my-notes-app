@@ -4,7 +4,7 @@
     <textarea
       id="noteInput"
       v-model="newNote"
-      @input="processInput"
+      @input="splitNoteIntoLines"
       type="text"
       maxlength="650"
       @keydown="preventExcessLines"
@@ -40,7 +40,8 @@ export default {
     return {
       newNote: "",
       noteUpdated: null as Note | null,
-      noteLines: [] as string[],
+      // note saved in array format to display bullet points, empty lines and go to next paragraph
+      noteToSave: [] as string[],
     };
   },
   watch: {
@@ -50,10 +51,10 @@ export default {
         this.noteUpdated = newValue;
         if (newValue) {
           this.newNote = newValue.note;
-          this.processInput();
+          this.splitNoteIntoLines();
         } else {
           this.newNote = "";
-          this.noteLines = [];
+          this.noteToSave = [];
         }
       },
     },
@@ -70,7 +71,7 @@ export default {
       event.preventDefault();
     }
   },
-    processInput() {
+    splitNoteIntoLines() {
       const lines = this.newNote.split("\n");
       const processedLines = lines.map((line) => {
         if (line.trim() === "") {
@@ -81,7 +82,7 @@ export default {
           return `${line}`;
         }
       });
-      this.noteLines = processedLines;
+      this.noteToSave = processedLines;
     },
     addNote() {
       if (this.noteUpdated) {
@@ -89,12 +90,12 @@ export default {
         axios
           .put(`${import.meta.env.VITE_VUE_APP_API_URL}/update-note`, {
             id: this.noteUpdated.id,
-            note: this.noteLines,
+            note: this.noteToSave,
           })
           .then(() => {
             this.newNote = "";
             this.noteUpdated = null;
-            this.noteLines = [];
+            this.noteToSave = [];
             this.$emit("noteUpdated");
           })
           .catch((error) => {
@@ -102,14 +103,13 @@ export default {
           });
       } else {
         // Add new note
-        console.log(this.noteLines);
         axios
           .post(`${import.meta.env.VITE_VUE_APP_API_URL}/add-note`, {
-            note: this.noteLines,
+            note: this.noteToSave,
           })
           .then(() => {
             this.newNote = "";
-            this.noteLines = [];
+            this.noteToSave = [];
             this.$emit("noteAdded");
           })
           .catch((error) => {

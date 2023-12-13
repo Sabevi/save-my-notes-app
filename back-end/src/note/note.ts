@@ -19,6 +19,7 @@ Note.init({
       const value = this.getDataValue('note');
       return value ? JSON.parse(value) : null;
     },
+    // note is converted to JSON when set because  SqLite doesn't support arrays
     set(val) {
       this.setDataValue('note', val ? JSON.stringify(val) : null);
     }
