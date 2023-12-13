@@ -2,7 +2,7 @@
   <div class="cards">
     <div class="card" v-for="note in notes" :key="note.id">
       <p
-        v-for="(line, index) in note.note.split(',')"
+        v-for="(line, index) in formattedNote(note.note)"
         :key="index"
         v-html="line === '' ? '<br>' : line"
       ></p>
@@ -15,20 +15,29 @@
 <script lang="ts">
 import DeleteNote from "./DeleteNote.vue";
 import UpdateNote from "./UpdateNote.vue";
-import type { PropType } from 'vue';
+import type { PropType } from "vue";
 import type { Note } from "../types";
 
 export default {
   props: {
     notes: {
-      type: Array as PropType< Note[] >,
+      type: Array as PropType<Note[]>,
       required: true,
     },
   },
   components: {
     DeleteNote,
     UpdateNote,
-  }
+  },
+  methods: {
+    formattedNote(note: string) {
+      return note
+        .replace(/\\"/g, "")
+        .replace(/[\[\]"]/g, "")
+        .replace(/"/g, "")
+        .split(",");
+    },
+  },  
 };
 </script>
 
@@ -84,7 +93,7 @@ export default {
   }
 
   p {
-  min-height: 10px;
-}
+    min-height: 10px;
+  }
 }
 </style>

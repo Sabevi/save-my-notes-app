@@ -10,14 +10,14 @@ export class UserSequelizeService implements NoteService {
     return Note.findByPk(id);
   }
 
-  async add(note: string[]): Promise<Note> {
-    return Note.create({ note: JSON.stringify(note) });
+  async add(note: string): Promise<Note> {
+    return Note.create({ note });
   }
 
-  async update(id: number, note: string[]): Promise<Note | null> {
+  async update(id: number, note: string): Promise<Note | null> {
     const noteToUpdate = await Note.findByPk(id);
     if (noteToUpdate) {
-      noteToUpdate.set('note', JSON.stringify(note));
+      noteToUpdate.set('note', note);
       await noteToUpdate.save();
     }
     return noteToUpdate;

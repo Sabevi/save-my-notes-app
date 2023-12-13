@@ -41,8 +41,8 @@ export default {
     return {
       newNote: "",
       noteUpdated: null as Note | null,
-      // note saved in array format to display bullet points, empty lines and go to next paragraph
-      noteToSave: [] as string[],
+      // note saved in array where each line is a separate item
+      formattedNote: [] as string[],
     };
   },
   watch: {
@@ -51,11 +51,11 @@ export default {
       handler(newValue) {
         this.noteUpdated = newValue;
         if (newValue) {
-          this.newNote = newValue.note.replace(/,/g, '\n');
+          this.newNote = this.formatNoteForUpdate(newValue.note).join("\n");
           this.splitNoteIntoLines();
         } else {
           this.newNote = "";
-          this.noteToSave = [];
+          this.formattedNote = [];
         }
       },
     },
@@ -67,36 +67,45 @@ export default {
   },
   methods: {
     preventExcessLines(event: KeyboardEvent) {
-    const lines = this.newNote.split("\n");
-    if (lines.length >= MAX_LINES && event.key === 'Enter') {
-      event.preventDefault();
-    }
-  },
+      const lines = this.newNote.split("\n");
+      if (lines.length >= MAX_LINES && event.key === "Enter") {
+        event.preventDefault();
+      }
+    },
     splitNoteIntoLines() {
       const lines = this.newNote.split("\n");
       const processedLines = lines.map((line) => {
         if (line.trim() === "") {
           return "";
+          // if line starts with a "-" replace it with a bullet point "•"
         } else if (line.trim().startsWith("-")) {
           return `• ${line.substring(1)}`;
         } else {
           return `${line}`;
         }
       });
-      this.noteToSave = processedLines;
+      this.formattedNote = processedLines;
+    },
+    formatNoteForUpdate(note: string) {
+      return note
+        .replace(/\\"/g, "")
+        .replace(/[\[\]"]/g, "")
+        .replace(/"/g, "")
+        .split(",");
     },
     addNote() {
+      const note = this.formattedNote.join(",");
       if (this.noteUpdated) {
         // Update existing note
         axios
           .put(`${import.meta.env.VITE_VUE_APP_API_URL}/update-note`, {
             id: this.noteUpdated.id,
-            note: this.noteToSave,
+            note: note,
           })
           .then(() => {
             this.newNote = "";
             this.noteUpdated = null;
-            this.noteToSave = [];
+            this.formattedNote = [];
             this.$emit("noteUpdated");
           })
           .catch((error) => {
@@ -106,11 +115,11 @@ export default {
         // Add new note
         axios
           .post(`${import.meta.env.VITE_VUE_APP_API_URL}/add-note`, {
-            note: this.noteToSave,
+            note: note,
           })
           .then(() => {
             this.newNote = "";
-            this.noteToSave = [];
+            this.formattedNote = [];
             this.$emit("noteAdded");
           })
           .catch((error) => {
