@@ -8,6 +8,7 @@
       type="text"
       maxlength="650"
       @keydown="preventExcessLines"
+      placeholder="Add your note here..."
     />
     <button class="addOrUpdate" @click="addNote" :aria-label="buttonText">
       {{ buttonText }}<font-awesome-icon :icon="['fas', 'check']" />
@@ -50,7 +51,7 @@ export default {
       handler(newValue) {
         this.noteUpdated = newValue;
         if (newValue) {
-          this.newNote = newValue.note;
+          this.newNote = newValue.note.replace(/,/g, '\n');
           this.splitNoteIntoLines();
         } else {
           this.newNote = "";
