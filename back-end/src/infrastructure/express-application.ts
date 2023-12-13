@@ -73,18 +73,21 @@ export class ExpressApplication {
     this.expressRouter = new ExpressRouter(this.noteService);
   }
 
-  private async configureServer(): Promise<void> {
-    this.server = new ExpressServer(
-      this.allowedMainOrigin,
-      this.expressRouter,
-      this.port,
-  );
-
+  private async synchroniseDatabase(): Promise<void> {
     try {
       await sequelize.sync();
       console.log('database is ready');
     } catch (error) {
       console.error('Error syncing database:', error);
     }
+  }
+
+  private async configureServer(): Promise<void> {
+    this.server = new ExpressServer(
+      this.allowedMainOrigin,
+      this.expressRouter,
+      this.port,
+    );
+    await this.synchroniseDatabase();
   }
 }
