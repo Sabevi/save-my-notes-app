@@ -62,7 +62,6 @@ h1 {
   color: #fff;
   text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  padding-top: 30px;
   margin-bottom: 30px;
 
   @media(max-width: 750px) {

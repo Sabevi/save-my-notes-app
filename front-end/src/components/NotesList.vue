@@ -48,7 +48,7 @@ export default {
   grid-column: 2/12;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 30px;
-  padding-top: 40px;
+  padding: 40px 0;
 
   @media (max-width: 1500px) {
     grid-template-columns: repeat(3, 1fr);
@@ -69,7 +69,6 @@ export default {
   }
 
   @media (max-width: 420px) {
-    grid-template-columns: repeat(1, 1fr);
     padding: 20px;
   }
 }
