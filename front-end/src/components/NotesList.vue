@@ -31,13 +31,12 @@ export default {
   },
   methods: {
     formattedNote(note: string) {
+      console.log(note);
       return note
-        .replace(/\\"/g, "")
-        .replace(/[\[\]"]/g, "")
-        .replace(/"/g, "")
-        .split(",");
+        .replace(/^-/gm, "• ")
+        .split("\n");
     },
-  },  
+  }
 };
 </script>
 

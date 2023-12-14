@@ -4,7 +4,6 @@
     <textarea
       id="noteInput"
       v-model="newNote"
-      @input="splitNoteIntoLines"
       type="text"
       maxlength="650"
       @keydown="preventExcessLines"
@@ -41,8 +40,6 @@ export default {
     return {
       newNote: "",
       noteUpdated: null as Note | null,
-      // note saved in array where each line is a separate item
-      formattedNote: [] as string[],
     };
   },
   watch: {
@@ -51,11 +48,9 @@ export default {
       handler(newValue) {
         this.noteUpdated = newValue;
         if (newValue) {
-          this.newNote = this.formatNoteForUpdate(newValue.note).join("\n");
-          this.splitNoteIntoLines();
+          this.newNote = newValue.note;
         } else {
           this.newNote = "";
-          this.formattedNote = [];
         }
       },
     },
@@ -72,40 +67,17 @@ export default {
         event.preventDefault();
       }
     },
-    splitNoteIntoLines() {
-      const lines = this.newNote.split("\n");
-      const processedLines = lines.map((line) => {
-        if (line.trim() === "") {
-          return "";
-          // if line starts with a "-" replace it with a bullet point "•"
-        } else if (line.trim().startsWith("-")) {
-          return `• ${line.substring(1)}`;
-        } else {
-          return `${line}`;
-        }
-      });
-      this.formattedNote = processedLines;
-    },
-    formatNoteForUpdate(note: string) {
-      return note
-        .replace(/\\"/g, "")
-        .replace(/[\[\]"]/g, "")
-        .replace(/"/g, "")
-        .split(",");
-    },
     addNote() {
-      const note = this.formattedNote.join(",");
       if (this.noteUpdated) {
         // Update existing note
         axios
           .put(`${import.meta.env.VITE_VUE_APP_API_URL}/update-note`, {
             id: this.noteUpdated.id,
-            note: note,
+            note: this.newNote,
           })
           .then(() => {
             this.newNote = "";
             this.noteUpdated = null;
-            this.formattedNote = [];
             this.$emit("noteUpdated");
           })
           .catch((error) => {
@@ -115,11 +87,10 @@ export default {
         // Add new note
         axios
           .post(`${import.meta.env.VITE_VUE_APP_API_URL}/add-note`, {
-            note: note,
+            note: this.newNote,
           })
           .then(() => {
             this.newNote = "";
-            this.formattedNote = [];
             this.$emit("noteAdded");
           })
           .catch((error) => {
@@ -150,7 +121,7 @@ button {
 textarea {
   max-width: 700px;
   width: 100%;
-  height: 100px;
+  height: 170px;
   border-radius: 10px;
   font-style: italic;
   font-size: 14px;
@@ -166,6 +137,7 @@ textarea {
 
   @media (max-width: 450px) {
     max-width: 350px;
+    height: 150px;
   }
 
   @media (max-width: 400px) {

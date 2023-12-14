@@ -1,5 +1,5 @@
 <template>
-  <h1> Save My Notes </h1>
+  <formattedNote> Save My Notes </formattedNote>
   <AddNote
     :note="selectedNote"
     @noteAdded="fetchNotes"
@@ -56,7 +56,7 @@ export default {
 </script>
 
 <style scoped>
-h1 {
+formattedNote {
   font-size: 50px;
   font-weight: bold;
   color: #fff;
